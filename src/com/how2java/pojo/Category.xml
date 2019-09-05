@@ -24,4 +24,32 @@ resultType="Category" 表示返回的数据和Category关联起来，这里本�
             select * from   category_  where id= #{id}
         </select>
 
+
+    <!--concat() 函数，是用来连接字符串。
+
+      精确查询： select * from user where name=”zhangsan”
+      模糊查询； select * from user where name like “%zhang%”
+
+      在实际的使用中，条件是作为参数传递进来的。 所以我们使用 concat() 函数
+
+      mybatis:
+      select * from user where name like concat(“%”, #{name},”%”)
+
+      concat(str1,str2,str3,str4,……….); 连接字符串函数，会生成一个字符串-->
+    <select id="listCategoryByName" parameterType="string" resultType="Category">
+        select * from category_ where name like concat("%",#{0},"%")
+    </select>
+
+
+<!--    多条件查询(这里查询的是id>*且name like *)-->
+    <select id="listCategoryByIdAndName" parameterType="map" resultType="Category">
+        select * from category_ where id>#{id} and name like concat("%",#{name},"%")
+    </select>
+
 </mapper>
+
+
+
+
+
+
